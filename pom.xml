@@ -14,10 +14,10 @@
 
   <dependencies>
     <dependency>
-  <groupId>org.hibernate</groupId>
-  <artifactId>hibernate-core</artifactId>
-  <version>3.6.7.Final</version>
-    <exclusions>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>3.6.7.Final</version>
+      <exclusions>
         <exclusion>
           <groupId>dom4j</groupId>
           <artifactId>dom4j</artifactId>
@@ -25,21 +25,28 @@
       </exclusions>
     </dependency>
     <dependency>
-  <groupId>javax.persistence</groupId>
-  <artifactId>persistence-api</artifactId>
-  <version>1.0.2</version>
-  </dependency>
-  <dependency>
-  <groupId>org.apache.tomcat</groupId>
-  <artifactId>servlet-api</artifactId>
-  <version>6.0.35</version>
-  <scope>provided</scope>
-  </dependency>    
-            
-            
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>6.0.35</version>
+      <scope>provided</scope>
+    </dependency>            
   </dependencies>
-
   <build>
-     <finalName>maven_template</finalName>
+    <finalName>maven_template</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>  
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
