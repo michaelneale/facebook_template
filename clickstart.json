@@ -1,0 +1,28 @@
+{
+    "id": "simple-web-example",
+    "name": "Simple Web and DB Example",
+    "source": "git://github.com/benjaminsavoy/ant_template.git",
+    "runtime": {
+        "type": "tomcat"
+    },
+    "databases": [
+        {
+            "type": "mysql",
+            "alias": "ExampleDS"
+        }
+    ],
+    "build-with-jenkins": {
+        "template": {
+            "type": "freestyle",
+            "options": {
+                "build-steps": [
+                    {
+                        "type": "ant"
+                        "targets": ""
+                    }
+                ]
+                "deploy": "target/*.war"
+            }
+        }
+    }
+}
