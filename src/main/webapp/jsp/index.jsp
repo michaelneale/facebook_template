@@ -29,7 +29,7 @@
 
 		<table class = "item_table">
 			<div class = "item_properties">
-				<tr><td>Name</td><td>Comment</td></tr>
+				<tr><td>Name</td><td>Comment</td><td>Author</td></tr>
 			</div>
 			<% out.print(request.getAttribute("items")); %>
 		</table>

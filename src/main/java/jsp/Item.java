@@ -11,11 +11,13 @@ public class Item implements Serializable {
 	
 	@Id String name;
 	String comment;
+	String author;
 	
-	public Item(String name, String comment) {
+	public Item(String name, String comment, String author) {
 		super();
 		this.name = name;
 		this.comment = comment;
+		this.author = author;
 	}
 
 	public Item() {
@@ -36,5 +38,13 @@ public class Item implements Serializable {
 
 	public String getComment() {
 		return comment;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	
+	public String getAuthor() {
+		return author;
 	}
 }
