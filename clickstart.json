@@ -1,7 +1,7 @@
 {
-    "id": "simple-web-example",
-    "name": "Simple Web and DB Example",
-    "source": "git://github.com/benjaminsavoy/maven_template.git",
+    "id": "facebook_template",
+    "name": "Simple Facebook and DB Example",
+    "source": "git://github.com/benjaminsavoy/facebook_template.git",
     "runtime": {
         "type": "jboss"
     },

@@ -30,9 +30,9 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 	private EntityManagerFactory emf;
 	private SecureRandom random = new SecureRandom();
 
-	String APP_ID = "353270288079506";
-	String APP_SECRET = "5ca7809e881d119fcf52c2d59aef3141";
-	String REDIRECT_URL = "http://facebook.bsavoy.cloudbees.net/";
+	String APP_ID = "";
+	String APP_SECRET = "";
+	String REDIRECT_URL = "";
 
 	public ItemController() {
 		super();

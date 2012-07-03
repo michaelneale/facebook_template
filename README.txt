@@ -1,3 +1,9 @@
+Before anything else, you have to modify the three following lines of src/main/java/jsp/ItemController.java to reflect the parameters of your Facebook app:
+
+	String APP_ID = "";
+	String APP_SECRET = "";
+	String REDIRECT_URL = "";
+
 To build and deploy this on CloudBees, follow those steps:
 
 Create application:
@@ -20,5 +26,5 @@ Create a new Maven project in Jenkins, changing the following:
 
 To build this locally:
 
-In the ant_template directory, open a command line, and invoke maven by typing "mvn package" to build the war file, then deploy it on cloudbees typing:
+In the facebook_template directory, open a command line, and invoke maven by typing "mvn package" to build the war file, then deploy it on cloudbees typing:
 	bees app:deploy -t jboss -a MYAPP_ID target/*.war
