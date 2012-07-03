@@ -8,7 +8,6 @@ import java.net.*;
 import java.security.SecureRandom;
 import java.math.BigInteger;
 import org.w3c.dom.Document;
-import com.facebook.api.*;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
