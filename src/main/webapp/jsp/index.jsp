@@ -31,7 +31,18 @@
 			<div class = "item_properties">
 				<tr><td>Name</td><td>Comment</td><td>Author</td></tr>
 			</div>
-			<% out.print(request.getAttribute("items")); %>
+			<% List<Item> itemList = (List<Item>) request.getAttribute("items");
+			StringBuilder sb = new StringBuilder();
+			for (Item item : itemList) {
+				sb.append("<div class=\"item\">\n<tr><td>");
+				sb.append(item.getName());
+				sb.append("</td><td>");
+				sb.append(item.getComment());
+				sb.append("</td><td>");
+				sb.append(item.getAuthor());
+				sb.append("</td></tr>\n</div>\n");
+			}
+			out.print(sb.toString()); %>
 		</table>
 	</body>
 </html>

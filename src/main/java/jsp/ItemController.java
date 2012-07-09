@@ -11,11 +11,7 @@ import org.w3c.dom.Document;
 
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceException;
+import org.hibernate.HibernateException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
@@ -25,9 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ItemController  extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 
 	private static final long serialVersionUID = 1L;
-
-	@PersistenceUnit(unitName="itemManager")
-	private EntityManagerFactory emf;
+	
 	private SecureRandom random = new SecureRandom();
 
 	String APP_ID = "";
@@ -111,26 +105,18 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 				HttpSession session = request.getSession();
 				Boolean valid = true;
 
-				if (emf == null)
-					emf = Persistence.createEntityManagerFactory("itemManager");
-				EntityManager em = emf.createEntityManager();
-
 				try {
+            		ItemManager manager = ItemManagerFactory.getManager();
+					
 					if (request.getParameter("remove") != null) {
 						String name = request.getParameter("removeName");
-						if (name != null) {
-							em.getTransaction().begin();
-    						Item item = (Item) em.find(Item.class, name);
-    						em.remove(item);
-    						em.getTransaction().commit();   
-						}
+                		manager.delete(name);
 			
 					} else if (request.getParameter("add") != null) {
 						String name = request.getParameter("name");
 						String comment = request.getParameter("comment");
 						if (name != null) {
 
-							em.getTransaction().begin();
 							String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
 							URL url = new URL(info);
 							HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -148,9 +134,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		          				String body = sb.toString();
 		          				JSONObject json = (JSONObject) JSONSerializer.toJSON(body);
 		          				String author = json.getString("name");
+								manager.add(name, comment, author);
 
-								em.persist(new Item(name, comment, author));
-								em.getTransaction().commit();
 							} else {
 								valid = false;
 							}
@@ -158,36 +143,17 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 					}
 
 					if (valid) {
-						List<Item> itemList = em.createQuery("SELECT i FROM Item i", Item.class).getResultList();
-						StringBuffer sb = new StringBuffer();
-						for (Item item: itemList) { 
-							sb.append("<div class=\"item\">\n<tr><td>");
-							sb.append(item.getName());
-							sb.append("</td><td>");
-							sb.append(item.getComment());
-							sb.append("</td><td>");
-							sb.append(item.getAuthor());
-							sb.append("</td></tr>\n</div>\n");
-			    		}
-
-			    		String out = sb.toString();
-						request.setAttribute("items", out);
-						request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
+						request.setAttribute("items", manager.getItems());
+            			request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
 					} else {
 						request.setAttribute("error", "Your token has expired.");
 						request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 					}
-				} catch (PersistenceException e) {
-					request.setAttribute("error", "The data you entered is invalid, please make sure you did not use duplicate names.");
-					request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
-				} catch (IllegalArgumentException e) {
-					request.setAttribute("error", "Cannot delete an item that doesn't exist.");
-					request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
-				} finally {
-					if (em.getTransaction().isActive())
-						em.getTransaction().rollback();
-					em.close();
-				}
+				// ItemManager methods can throw HibernateException, so we catch them with a standard error page.
+	        	} catch (HibernateException e) {
+		            request.setAttribute("error", "Invalid query, please try again.");
+		            request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+		        }
 		} else {
 			request.setAttribute("error", "Your session has expired.");
 			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);

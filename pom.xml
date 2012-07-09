@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -6,10 +7,10 @@
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cloudbees.templates</groupId>
-  <artifactId>maven-cloudbees-template</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>facebook-hibernate-template</artifactId>
+  <version>1.0</version>
   <packaging>war</packaging>
-  <name>A Simple Java EE Webapp for CloudBees</name>
+  <name>A Simple Facebook and Hibernate Webapp for CloudBees</name>
   <inceptionYear>2012</inceptionYear>
 
   <dependencies>
@@ -19,15 +20,14 @@
       <version>2.1-rev6</version>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>3.6.7.Final</version>
-      <exclusions>
-        <exclusion>
-          <groupId>dom4j</groupId>
-          <artifactId>dom4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>javax.persistence</groupId>
@@ -35,14 +35,19 @@
       <version>1.0.2</version>
     </dependency>
     <dependency>
+      <groupId>javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.12.1.GA</version>
+    </dependency>    
+    <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>servlet-api</artifactId>
       <version>6.0.35</version>
       <scope>provided</scope>
-    </dependency>           
+    </dependency>        
   </dependencies>
   <build>
-    <finalName>maven_template</finalName>
+    <finalName>facebook_template</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
