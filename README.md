@@ -1,4 +1,4 @@
-# Maven Template with Hibernate for CloudBees.
+# Facebook Template with Hibernate for CloudBees.
 
 ## Note before deploying this on JBoss 7:
 
@@ -33,7 +33,7 @@ Create a new Maven project in Jenkins, changing the following:
 
 ## To build this locally:
 
-In the maven_template directory, open a command line, and invoke maven by typing "mvn package" to build the war file, then deploy it on cloudbees typing:
+In the facebook_template directory, open a command line, and invoke maven by typing "mvn package" to build the war file, then deploy it on cloudbees typing:
 
     bees app:deploy -t tomcat -a MYAPP_ID target/*.war
 

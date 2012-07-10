@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ItemController  extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private SecureRandom random = new SecureRandom();
 
 	String APP_ID = "";
@@ -42,10 +42,17 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		HttpSession session = request.getSession(true);
 		Boolean valid = false;
 
-		// If token is valid
-		if (session.getValue("token") != null) {
-			String info = "https://graph.facebook.com/me?access_token=" + session.getValue("token");
-			// Check if token is valid, if so, valid = true
+		if (session.getAttribute("token") != null) {
+			// Check if token is valid
+			String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
+			URL url = new URL(info);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(true);
+		    connection.connect();
+
+			if (connection.getResponseCode() == 200) {
+				valid = true;
 		}
 
 		if (valid) { 
@@ -72,26 +79,31 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
               				sb.append(line + '\n');
 
           				String body = sb.toString();
+          				String state = body.split("&")[1].split("=")[1];
 						String token = body.split("&")[0].split("=")[1];
 
-						session.setAttribute("token", token);
+						if ((String) session.getAttribute("state") == state) {
+							session.setAttribute("token", token);
+							doPost(request, response);
+						} else {
+							request.setAttribute("error", "Session and state do not match.");
+							request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+						}
 
-						doPost(request, response);
 					} else {
 						request.setAttribute("error", "Failed to retrieve token.");
 						request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 					}
-
-
 				} else {
-					// Access was denied to the application
 					request.setAttribute("error", "You denied access to this Facebook application.");
 					request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 				}	
 			} else {
 				// Redirecting to Facebook splash page
 				String facebook;
-				facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&state=" + getNewState();
+				String state = getNewState();
+				facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&state=" + state;
+				session.setAttribute("state", state);
 				response.sendRedirect(facebook);
 			}
 		}
