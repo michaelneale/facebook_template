@@ -36,8 +36,7 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
     	return new BigInteger(130, random).toString(32);
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession(true);
 		Boolean valid = false;
@@ -51,7 +50,7 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 			connection.setDoOutput(true);
 		    connection.connect();
 
-			if (connection.getResponseCode() == 200) {
+			if (connection.getResponseCode() == 200)
 				valid = true;
 		}
 
@@ -79,16 +78,10 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
               				sb.append(line + '\n');
 
           				String body = sb.toString();
-          				String state = body.split("&")[1].split("=")[1];
 						String token = body.split("&")[0].split("=")[1];
 
-						if ((String) session.getAttribute("state") == state) {
-							session.setAttribute("token", token);
-							doPost(request, response);
-						} else {
-							request.setAttribute("error", "Session and state do not match.");
-							request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
-						}
+						session.setAttribute("token", token);
+						doPost(request, response);
 
 					} else {
 						request.setAttribute("error", "Failed to retrieve token.");
@@ -109,8 +102,7 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		}
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		if (request.getSession() != null) {
 

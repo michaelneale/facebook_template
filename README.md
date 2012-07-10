@@ -1,5 +1,15 @@
 # Facebook Template with Hibernate for CloudBees.
 
+## Configuration changes
+
+Before doing anything, make sure to edit the three following lines in src/main/java/jsp/ItemController.java with respectively your Facebook API ID, secret key, and your app's URL.
+
+    String APP_ID = "";
+    String APP_SECRET = "";
+    String REDIRECT_URL = "";
+
+If you do not have this data available yet, you will need to go to http://facebook.com/developers to create a new Facebook app.
+
 ## Note before deploying this on JBoss 7:
 
 There are configuration changes to do in the following file, comments will indicate which lines to change and how.

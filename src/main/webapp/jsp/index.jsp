@@ -1,4 +1,6 @@
 <!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01//EN">
+<%@ page import="java.util.List" %>
+<%@ page import="jsp.Item" %>
 <html>
 	<head>
 		<meta http-equiv="content-type"
