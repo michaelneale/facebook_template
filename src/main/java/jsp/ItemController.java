@@ -38,66 +38,74 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession(true);
-		Boolean valid = false;
+		
+		// Checks if required fields have been properly set.
+		if(APP_ID == "" || APP_SECRET == "" || REDIRECT_URL == "") {
+			request.setAttribute("error", "You still have to define your Facebook application API keys and URL, please refer to the README.md in the root directory of your project.");
+			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+		} else {
 
-		if (session.getAttribute("token") != null) {
-			// Check if token is valid
-			String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
-			URL url = new URL(info);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-		    connection.connect();
+			HttpSession session = request.getSession(true);
+			Boolean valid = false;
 
-			if (connection.getResponseCode() == 200)
-				valid = true;
-		}
+			if (session.getAttribute("token") != null) {
+				// Check if token is valid
+				String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
+				URL url = new URL(info);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				connection.setRequestMethod("GET");
+				connection.setDoOutput(true);
+			    connection.connect();
 
-		if (valid) { 
-			doPost(request, response);
-		} else {	
-			if (request.getParameter("state") != null) {
-				if (request.getParameter("code") != null) {
+				if (connection.getResponseCode() == 200)
+					valid = true;
+			}
 
-					// Access authorized, getting auth token.
-					String code = request.getParameter("code");
-					String tokenReq = "https://graph.facebook.com/oauth/access_token?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&client_secret=" + APP_SECRET +"&code=" + code;
-					
-					URL url = new URL(tokenReq);
-					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestMethod("GET");
-					connection.setDoOutput(true);
-          			connection.connect();
+			if (valid) { 
+				doPost(request, response);
+			} else {	
+				if (request.getParameter("state") != null) {
+					if (request.getParameter("code") != null) {
 
-					if (connection.getResponseCode() == 200) {
-						BufferedReader rd  = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-          				StringBuffer sb = new StringBuffer();
-          				String line;
-          				while ((line = rd.readLine()) != null)
-              				sb.append(line + '\n');
+						// Access authorized, getting auth token.
+						String code = request.getParameter("code");
+						String tokenReq = "https://graph.facebook.com/oauth/access_token?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&client_secret=" + APP_SECRET +"&code=" + code;
+						
+						URL url = new URL(tokenReq);
+						HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+						connection.setRequestMethod("GET");
+						connection.setDoOutput(true);
+	          			connection.connect();
 
-          				String body = sb.toString();
-						String token = body.split("&")[0].split("=")[1];
+						if (connection.getResponseCode() == 200) {
+							BufferedReader rd  = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	          				StringBuffer sb = new StringBuffer();
+	          				String line;
+	          				while ((line = rd.readLine()) != null)
+	              				sb.append(line + '\n');
 
-						session.setAttribute("token", token);
-						doPost(request, response);
+	          				String body = sb.toString();
+							String token = body.split("&")[0].split("=")[1];
 
+							session.setAttribute("token", token);
+							doPost(request, response);
+
+						} else {
+							request.setAttribute("error", "Failed to retrieve token.");
+							request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+						}
 					} else {
-						request.setAttribute("error", "Failed to retrieve token.");
+						request.setAttribute("error", "You denied access to this Facebook application.");
 						request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
-					}
+					}	
 				} else {
-					request.setAttribute("error", "You denied access to this Facebook application.");
-					request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
-				}	
-			} else {
-				// Redirecting to Facebook splash page
-				String facebook;
-				String state = getNewState();
-				facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&state=" + state;
-				session.setAttribute("state", state);
-				response.sendRedirect(facebook);
+					// Redirecting to Facebook splash page
+					String facebook;
+					String state = getNewState();
+					facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&state=" + state;
+					session.setAttribute("state", state);
+					response.sendRedirect(facebook);
+				}
 			}
 		}
 	}
