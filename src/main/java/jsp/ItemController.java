@@ -36,12 +36,15 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
     	return new BigInteger(130, random).toString(32);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+							throws ServletException, IOException {
 
 		
 		// Checks if required fields have been properly set.
 		if(APP_ID == "" || APP_SECRET == "" || REDIRECT_URL == "") {
-			request.setAttribute("error", "You still have to define your Facebook application API keys and URL, please refer to the README.md in the root directory of your project.");
+			request.setAttribute("error", "You still have to define your Facebook application API keys 
+				and URL, please refer to the README.md in the root directory of your project. Or, alternatively, click 
+				<a href=\"https://github.com/CloudBees-community/facebook_template/blob/master/README.md\">here</a>.");
 			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
 		} else {
 
@@ -50,7 +53,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 
 			if (session.getAttribute("token") != null) {
 				// Check if token is valid
-				String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
+				String info = "https://graph.facebook.com/me?access_token=" + 
+								(String) session.getAttribute("token");
 				URL url = new URL(info);
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 				connection.setRequestMethod("GET");
@@ -69,7 +73,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 
 						// Access authorized, getting auth token.
 						String code = request.getParameter("code");
-						String tokenReq = "https://graph.facebook.com/oauth/access_token?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&client_secret=" + APP_SECRET +"&code=" + code;
+						String tokenReq = "https://graph.facebook.com/oauth/access_token?client_id=" + 
+							APP_ID + "&redirect_uri=" + REDIRECT_URL + "&client_secret=" + APP_SECRET +"&code=" + code;
 						
 						URL url = new URL(tokenReq);
 						HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -78,7 +83,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 	          			connection.connect();
 
 						if (connection.getResponseCode() == 200) {
-							BufferedReader rd  = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+							BufferedReader rd  = new BufferedReader(
+								new InputStreamReader(connection.getInputStream()));
 	          				StringBuffer sb = new StringBuffer();
 	          				String line;
 	          				while ((line = rd.readLine()) != null)
@@ -102,7 +108,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 					// Redirecting to Facebook splash page
 					String facebook;
 					String state = getNewState();
-					facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + "&redirect_uri=" + REDIRECT_URL + "&state=" + state;
+					facebook = "https://www.facebook.com/dialog/oauth?client_id=" + APP_ID + 
+								"&redirect_uri=" + REDIRECT_URL + "&state=" + state;
 					session.setAttribute("state", state);
 					response.sendRedirect(facebook);
 				}
@@ -110,7 +117,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+								throws ServletException, IOException {
 
 		if (request.getSession() != null) {
 
@@ -129,7 +137,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 						String comment = request.getParameter("comment");
 						if (name != null) {
 
-							String info = "https://graph.facebook.com/me?access_token=" + (String) session.getAttribute("token");
+							String info = "https://graph.facebook.com/me?access_token=" + 
+											(String) session.getAttribute("token");
 							URL url = new URL(info);
 							HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 							connection.setRequestMethod("GET");
@@ -137,7 +146,8 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		          			connection.connect();
 
 							if (connection.getResponseCode() == 200) {
-								BufferedReader rd  = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+								BufferedReader rd  = new BufferedReader(
+									new InputStreamReader(connection.getInputStream()));
 		          				StringBuffer sb = new StringBuffer();
 		          				String line;
 		          				while ((line = rd.readLine()) != null)
