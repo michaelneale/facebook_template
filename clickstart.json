@@ -1,7 +1,8 @@
 {
     "id": "facebook_template",
     "name": "Simple Facebook and Hibernate Example for CloudBees",
-    "source": "git://github.com/benjaminsavoy/facebook_template.git",
+    "source": "git://github.com/CloudBees-community/facebook_template.git",
+    "description" : "Build a database backed facebook app",
     "runtime": {
         "type": "tomcat"
     },
