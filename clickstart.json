@@ -1,7 +1,7 @@
 {
     "id": "facebook_template",
-    "name": "Simple Facebook and Hibernate Example for CloudBee",
-    "source": "git://github.com/benjaminsavoy/facebook_template.git",
+    "name": "Simple Facebook and Hibernate Example for CloudBees",
+    "source": "git://github.com/CloudBees-community/facebook_template.git",
     "runtime": {
         "type": "tomcat"
         // Comment the above line, and uncomment the following one to deploy on JBoss
