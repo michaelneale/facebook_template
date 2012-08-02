@@ -2,10 +2,10 @@
     "id": "facebook_template",
     "name": "Simple Facebook and Hibernate Example for CloudBees",
     "source": "git://github.com/CloudBees-community/facebook_template.git",
+    "description" : "Build a database backed facebook app",
+    "disabled" : true,
     "runtime": {
         "type": "tomcat"
-        // Comment the above line, and uncomment the following one to deploy on JBoss
-        //"type": "jboss"
     },
     "databases": [
         {
