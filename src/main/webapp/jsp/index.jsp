@@ -22,7 +22,7 @@
 		<form action="/" method="post">
 			<div class = "remove">
 				<p>
-        			<label for="name">Name: </label>
+        			<label for="removeName">Name: </label>
         			<input type="text" name="removeName" id="removeName" />
         			<input type="submit" name="remove" value="Remove item" />
     			</p>

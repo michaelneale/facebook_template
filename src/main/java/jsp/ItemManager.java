@@ -28,11 +28,11 @@ class ItemManager {
         
     }
 
-    void add(String name, String comment, String author) throws HibernateException {
+    void add(Item item) throws HibernateException {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.save(new Item(name, comment, author));
+            session.save(item);
             tx.commit();
         } catch (HibernateException e) {
             tx.rollback();

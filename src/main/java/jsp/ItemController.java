@@ -156,7 +156,7 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		          				String body = sb.toString();
 		          				JSONObject json = (JSONObject) JSONSerializer.toJSON(body);
 		          				String author = json.getString("name");
-								manager.add(name, comment, author);
+								manager.add(new Item(name, comment, author));
 
 							} else {
 								valid = false;
