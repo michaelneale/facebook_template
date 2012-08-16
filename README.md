@@ -1,5 +1,7 @@
 # Facebook Template with Hibernate for CloudBees.
 
+<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/facebook_template/master/clickstart.json"><img src="https://s3.amazonaws.com/cloudbees-downloads/clickstart/clickstart-now.png"/></a>
+
 ## Configuration changes
 
 Before doing anything, make sure to edit the three following lines in src/main/java/jsp/ItemController.java with respectively your Facebook API ID, secret key, and your app's URL.
