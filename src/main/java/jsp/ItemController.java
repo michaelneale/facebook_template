@@ -42,10 +42,7 @@ public class ItemController  extends javax.servlet.http.HttpServlet implements j
 		
 		// Checks if required fields have been properly set.
 		if (APP_ID == "" || APP_SECRET == "" || REDIRECT_URL == "") {
-			request.setAttribute("error", "You still have to define your Facebook application API keys " +
-				"and URL, please refer to the README.md in the root directory of your project. Or, alternatively, click " +
-				"<a href=\"https://github.com/CloudBees-community/facebook_template/blob/master/README.md\">here</a>.");
-			request.getRequestDispatcher("jsp/error.jsp").forward(request, response);
+			request.getRequestDispatcher("jsp/help.jsp").forward(request, response);
 		} else {
 
 			HttpSession session = request.getSession(true);
