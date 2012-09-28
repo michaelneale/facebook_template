@@ -9,7 +9,7 @@
 		Welcome to your Facebook app! <br>
 		You still have to define your Facebook application API keys 
 		and URL, please refer to the README.md in the root directory of your project. Or, alternatively, click 
-		<a href=\"https://github.com/CloudBees-community/facebook_template/blob/master/README.md\">here</a>.
+		<a href="https://github.com/CloudBees-community/facebook_template/blob/master/README.md">here</a>.
 
 		
 	  <!-- this is used for first time display of clickstart - a template-->
