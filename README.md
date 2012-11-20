@@ -1,6 +1,13 @@
 # Facebook Template with Hibernate for CloudBees.
 
-<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/facebook_template/master/clickstart.json"><img src="https://s3.amazonaws.com/cloudbees-downloads/clickstart/clickstart-now.png"/></a>
+<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/facebook_template/master/clickstart.json"><img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
+
+This can be a starting point for building your Facebook app in Java. 
+Once you have run the above clickstart - you will want to set up your SSH keys in Grand Central if you haven't already: 
+
+https://grandcentral.cloudbees.com/user/ssh_keys
+
+You can then clone the repo from CloudBees, and make the following changes to get it to work with your facebook developer details.
 
 ## Configuration changes
 
