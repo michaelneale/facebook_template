@@ -1,9 +1,10 @@
 {
     "id": "facebook_template",
-    "name": "Simple Facebook and Hibernate Example for CloudBees",
-    "source": "git://github.com/CloudBees-community/facebook_template.git",
-    "description" : "Build a database backed facebook app",
-    "icon" : "https://raw.github.com/CloudBees-community/facebook_template/master/icon.png",
+    "name": "Facebook application starting point",
+    "source": "github",
+    "description" : "Build a very simple database backed facebook app in java, with continuous deployment",
+    "icon" : "https://d3ko533tu1ozfq.cloudfront.net/clickstart/facebook.png",
+    "app-package" : "https://s3.amazonaws.com/cloudbees-downloads/clickstart/facebook.war",
     "disabled" : true,
     "runtime": {
         "type": "tomcat"
