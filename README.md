@@ -1,5 +1,7 @@
 # Facebook Template with Hibernate for CloudBees.
 
+[![Git](https://app.soluble.cloud/api/v1/public/badges/f19f39ea-70b6-49bf-b36c-2314d007f8d3.svg?orgId=451115019187)](https://app.soluble.cloud/repos/details/github.com/michaelneale/facebook_template?orgId=451115019187)  
+
 <a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/facebook_template/master/clickstart.json"><img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
 
 This can be a starting point for building your Facebook app in Java. 
